@@ -1,4 +1,4 @@
-//import 'react-native-gesture-handler';
+
 import React from 'react';
 import {
   applyMiddleware,
@@ -6,15 +6,10 @@ import {
 } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
-import {
-  StyleSheet,
-  View
-} from 'react-native';
+
+
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-
-
-
 
 
 
@@ -48,11 +43,3 @@ export default function App() {
     </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    paddingTop: 23,
-    paddingBottom: 25,
-    flex: 1,
-  }
-})

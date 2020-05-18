@@ -4,18 +4,19 @@ import {
     Image,
     StyleSheet,
     Text,
+    Dimensions
 } from 'react-native';
 
-export default function Item({ photos, names, descriptions }) {
+
+export default function Item({ photos, names }) {
 
     return (
-        <View style={styles.imagesContainer}>
+        <View style={styles.imagesContent}>
             <Image
                 style={styles.images}
                 source={{ uri: photos }}
             />
             <View style={styles.namesContainer}>
-                <Text style={styles.descriptions}>{descriptions}</Text>
                 <Text style={styles.names}>{names}</Text>
             </View>
         </View>
@@ -23,38 +24,31 @@ export default function Item({ photos, names, descriptions }) {
 }
 
 const styles = StyleSheet.create({
-    imagesContainer: {
-        flexDirection: "column",
-        margin: 15,
-        elevation: 5,  //Android
-        flex: 1,
-        shadowColor: "black",   //IOS
-        shadowOffset: { width: 0, height: 4 }, //IOS
-        shadowOpacity: 0.21,  //IOS
-        shadowRadius: 6, //IOS
-    },
+  
     images: {
-        width: '100%',
-        height: 210,
+        flex: 1,
+        width: null,
+        alignSelf: "stretch",
         borderTopLeftRadius: 6,
         borderTopRightRadius: 6,
-        marginBottom: 1,
+        marginBottom: 2,
     },
     namesContainer: {
         backgroundColor: "#ddd",
-        padding: 15,
+        padding: 10,
         borderBottomLeftRadius: 6,
         borderBottomRightRadius: 6,
     },
     names: {
         alignSelf: "center",
-        fontSize: 19,
-        color: "#fff"
-    },
-    descriptions: {
-        fontSize: 10,
-        width: '100%',
+        fontSize: 15,
+        color: "#fff",
         textAlign: "center",
+    },
+    imagesContent: {
+        margin: 2,
+        padding: 2,
+        height: Dimensions.get("window").height/4,
+        width: Dimensions.get("window").width/2.1,
     }
-
 })

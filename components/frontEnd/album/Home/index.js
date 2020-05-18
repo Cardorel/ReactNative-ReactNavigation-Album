@@ -2,11 +2,10 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import {
     View,
-    FlatList,
     ActivityIndicator,
     StyleSheet,
-    Text,
-    TouchableOpacity
+    TouchableOpacity,
+    ScrollView,
 } from 'react-native';
 
 import { albumAction } from '../../../backEnd/REDUX/Action'
@@ -14,12 +13,12 @@ import Item from './Item';
 
 
 const Home = ({ albumDataInProps, dispatchAlbumFunc, navigation }) => {
-
     //use effect every time when component did mount
     useEffect(() => {
         dispatchAlbumFunc();
     }, [dispatchAlbumFunc]);
 
+    
     const AlbumHandle = () => {
         //Check if not Data => shw spinner
         if (!albumDataInProps.loading) {
@@ -27,42 +26,43 @@ const Home = ({ albumDataInProps, dispatchAlbumFunc, navigation }) => {
         } else {
             //else show data
             return (
-                <View style={styles.albumContent}>
-                    <FlatList
-                        data={albumDataInProps.data}
-                        renderItem={({ item }) => (
-                            <TouchableOpacity
-                                onPress={() => navigation.navigate('Detail',
-                                    {
-                                        getFullPicture: item.urls.full,
-                                    }
-                                )}>
-                                <Item
-                                    photos={item.urls.small}
-                                    descriptions={item.alt_description}
-                                    names={item.user.name}
-                                />
-                            </TouchableOpacity>
+                albumDataInProps.data.map(item => (
+                    <TouchableOpacity
+                        onPress={() => navigation.navigate('Detail',
+                            {
+                                getFullPicture: item.urls.full,
+                            }
                         )}
-                        keyExtractor={item => item.user.id}
-                    />
-                </View>
+                        
+                        key={item.id}
+                    >
+                        <Item
+                            photos={item.urls.small}
+                            names={item.user.name}
+                        />
+                    </TouchableOpacity>
+                ))
             )
         }
     }
 
     return (
-        <View>
-            <AlbumHandle />
-        </View>
+        <ScrollView>
+            <View style={styles.containerGallery}>
+                <AlbumHandle />
+            </View>
+        </ScrollView>
     );
 }
 
 const styles = StyleSheet.create({
-    albumContent: {
-        paddingTop: 15,
-        width: '100%',
-    }
+    containerGallery: {
+        flexDirection: "row",
+        flexWrap: "wrap",
+        backgroundColor: "#eee",
+        justifyContent: "center",
+        alignContent: "center",
+    },
 })
 
 //Get data in the Store
